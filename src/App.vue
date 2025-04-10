@@ -12,6 +12,8 @@
       @notifyQti3EndAttemptCompleted="handleEndAttemptCompleted"
       @notifyQti3ItemAlertEvent="displayItemAlertEvent"
     />
+    <h1>{{ title }}</h1>
+    <p>{{ subtitle }}</p>
     <button ref="btnPrev" type="button" @click="handlePrevItem" class="btn btn-sm btn-outline-primary">Prev</button>
     <button ref="btnNext" type="button" @click="handleNextItem" class="btn btn-sm btn-outline-primary">Next</button>
   </div>
@@ -26,6 +28,16 @@ import Swal from 'sweetalert2'
 
 export default {
   name: 'App',
+  props: {
+    title: {
+      type: String,
+      default: ""
+    },
+    subtitle: {
+      type: String,
+      default: ""
+    }
+  },
   components: {
     Qti3Player
   },
@@ -299,7 +311,7 @@ export default {
 
   mounted () {
     this.initialize()
-  }
+  },
 }
 </script>
 
