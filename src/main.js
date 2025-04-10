@@ -1,15 +1,28 @@
 import Vue from 'vue'
-import wrap from '@vue/web-component-wrapper'
 import App from './App.vue'
 
 Vue.config.productionTip = false
 
-// new Vue({
-//   render: h => h(App),
-// }).$mount('#app')
+class QtiPlayerElement extends HTMLElement {
+  constructor() {
+    super()
+    this.attachShadow({ mode: 'open' })
+  }
 
-// Wrap the Vue component
-const qtiElement = wrap(Vue, App)
+  connectedCallback() {
+    const mountPoint = document.createElement('div')
+    this.shadowRoot.appendChild(mountPoint)
 
-// Define the custom element
-window.customElements.define('qti-player', qtiElement)
+    const styleNodes = document.querySelectorAll('style')
+    styleNodes.forEach(style => {
+      this.shadowRoot.appendChild(style.cloneNode(true))
+    })
+
+
+    new Vue({
+      render: h => h(App)
+    }).$mount(mountPoint)
+  }
+}
+
+customElements.define('qti-player', QtiPlayerElement)
